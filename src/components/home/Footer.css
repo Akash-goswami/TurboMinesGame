@@ -1,0 +1,15 @@
+  .footer-container {
+
+    font-size: 10px;
+    color: #ffffff80;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+  }
+  .ContaintFooter{
+    display: flex;
+    width:100%;
+    justify-content: space-between;
+    padding:0px 10px 0px 10px ; 
+  }
+  
