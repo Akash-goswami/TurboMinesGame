@@ -23,14 +23,15 @@ const images: string[] = [
 ];
 
 const MainGame: React.FC = () => {
-  const [isGameStarted, setIsGameStarted] = useState<boolean>(false);
+  const [isGameStarted, setIsGameStarted] = useState<boolean>(true);
   const [clickedTiles, setClickedTiles] = useState<boolean[]>(Array(9).fill(false)); // Track clicked tiles
   const [clickedIndex, setClickedIndex] = useState<number | null>(null); // To store which tile was clicked
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState<boolean>(false);
+  const [isAllTilesDisabled, setIsAllTilesDisabled] = useState<boolean>(false); // To disable all tiles
 
   useEffect(() => {
-    let interval: NodeJS.Timeout | undefined;
+    let interval: any;
     if (clickedIndex !== null) {
       interval = setInterval(() => {
         setCurrentImageIndex((prevIndex) => {
@@ -49,20 +50,18 @@ const MainGame: React.FC = () => {
     };
   }, [clickedIndex]);
 
-  const handleTileClick = (index: number): void => {
-    if (clickedTiles[index]) return; // Prevent clicking already clicked tiles
-
-    setClickedIndex(index); // Store clicked tile index to show blast image
-    setCurrentImageIndex(0);
-    setIsAnimationComplete(false);
-
-    setClickedTiles((prevTiles) => {
-      const updatedTiles = [...prevTiles];
-      updatedTiles[index] = true; // Mark this tile as clicked
-      return updatedTiles;
-    });
+  // Reset the game after 3 seconds when a bomb tile is clicked
+  const resetGame = () => {
+    setTimeout(() => {
+      setClickedTiles(Array(9).fill(false)); // Reset clicked tiles
+      setClickedIndex(null); // Reset clicked index
+      setCurrentImageIndex(0); // Reset animation index
+      setIsAnimationComplete(false); // Reset animation state
+      setIsAllTilesDisabled(false); // Enable all tiles again
+      setIsGameStarted(false); // Reset the game start state
+    },10000); // 3 seconds delay
   };
-
+  
   const getTileClass = (index: number): string => {
     if (clickedTiles[index]) {
       if (index < 4) {
@@ -76,37 +75,60 @@ const MainGame: React.FC = () => {
     return "";
   };
 
+  const handleTileClick = (index: number): void => {
+    if (clickedTiles[index] || isAllTilesDisabled) return; // Prevent clicking already clicked tiles or disabled tiles
+    
+    // Mark the clicked tile and start animation for the blast image
+    setClickedIndex(index);
+    setCurrentImageIndex(0);
+    setIsAnimationComplete(false);
+    
+    setClickedTiles((prevTiles) => {
+      const updatedTiles = [...prevTiles];
+      updatedTiles[index] = true; // Mark this tile as clicked
+      return updatedTiles;
+    });
+
+    // If bomb tile is clicked, disable all tiles and trigger reset
+    if (index >= 7) {
+      setIsAllTilesDisabled(true); // Disable all tiles when bomb tile is clicked
+      resetGame(); // This will reset the game when the bomb tile is clicked
+    }
+  };
+
   const shouldShowBlastImage = (index: number): boolean => {
-    // Only show blast animation on the _bomb tiles (8 and 9)
     return clickedTiles[index] && getTileClass(index) === "_bomb" && !isAnimationComplete;
   };
 
   return (
     <div className="template__game">
       <div className="game">
-        <div className={`game__grid _3x3 ${isGameStarted ? "" : "_disabled"}`}>
+        <div className={`game__grid _3x3 ${isGameStarted ? "" : "_disabled"}
+         `}>
+           {/* //  ${isAllTilesDisabled ? "gameOver_disabled" : ""} */}
           {[...Array(9)].map((_, index) => (
             <div
               key={index}
-              className={`game__item ${getTileClass(index)}`} // Dynamically assign the class based on the index
+              className={`game__item ${getTileClass(index)} ${
+                isAllTilesDisabled && !clickedTiles[index] ? "gameOver_disabled" : ""
+              }`} 
               onClick={() => handleTileClick(index)}
             >
               <div className="game__item-layout1">
                 <div className="game__item-layout2">
                   { 
-                  !shouldShowBlastImage(index) &&
-                    clickedIndex === index &&  <div className="game__item-layout3">
-                </div>
+                    shouldShowBlastImage(index) ? (
+                      <div className="game__item-layout3">
+                        <img
+                          src={images[currentImageIndex]}
+                          alt={`Blast Image ${currentImageIndex + 1}`}
+                          className="animated__image"
+                        />
+                      </div>
+                    ) : (
+                      clickedIndex === index && <div className="game__item-layout3"></div>
+                    )
                   }
-                  {shouldShowBlastImage(index) && ( // Only show the blast image on _bomb tiles
-                    <div className="game__item-layout3">
-                      <img
-                        src={images[currentImageIndex]}
-                        alt={`Blast Image ${currentImageIndex + 1}`}
-                        className="animated__image"
-                      />
-                    </div>
-                  )}
                   <div className="game__item-sum">$122</div>
                 </div>
               </div>
@@ -119,6 +141,3 @@ const MainGame: React.FC = () => {
 };
 
 export default MainGame;
-
-
-

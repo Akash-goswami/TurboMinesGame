@@ -60,8 +60,8 @@
 .game__item {
     padding: .125rem;
     position: relative;
-    width: 90%;
-    height: 90%;
+    width: 92%;
+    height: 92%;
 }
 
 .game__item-layout1 {
@@ -108,8 +108,12 @@
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease-in-out;
+    opacity:0;
   }
   
+  .start-alert .offGame_Alert{
+    opacity:1;
+  }
   .start-alert__alert {
     position: absolute;
     left: 50%;
@@ -160,9 +164,9 @@
 }
 
   //Blue diamond css
-  .game__item._diamondBlue {
-    pointer-events: none;
-    animation: game-item-open .25s linear forwards;
+.game__item._diamondBlue {
+pointer-events: none;
+animation: game-item-open .25s linear forwards;
 }
 .game__item._diamondBlue .game__item-layout1 {
     background-image: linear-gradient(137deg, #9de9fa -17.13%, #1350ac 118.51%);
@@ -186,7 +190,7 @@
 }
 .game__item._diamondGreen .game__item-layout2 {
     background-image: url(/public/GameImages/GreenImg01.svg), url(/public/GameImages/GreenImg02.webp), linear-gradient(359deg, #0b5037 -10.34%, #0b402d -10.33%, #031d0f 46.92%, #0c490e 108.68%);
-    background-size: contain, 50%, contain;
+    background-size: contain, 92%, contain;
     background-repeat: no-repeat;
     background-position: center;
     animation: diamond-open .2s linear forwards;
@@ -203,7 +207,7 @@
 }
 .game__item._bomb .game__item-layout2 {
     background-image: url(/public/GameImages/bombImg01.svg), url(/public/GameImages/bombImg02.webp), linear-gradient(15deg, #3a0505 4.12%, #150202 48.84%, #331005 96.65%);
-    background-size: contain, 50%, contain;
+    background-size: contain, 92%, contain;
     background-repeat: no-repeat;
     background-position: center;
     animation: diamond-open .2s linear forwards;
@@ -212,6 +216,7 @@
     pointer-events: none;
     opacity: .3;
 }
+
 
 @keyframes diamond-open {
     0% {
@@ -244,6 +249,9 @@
     .game {
         max-width: 27.75rem;
     }
+    /* .game__grid._disabled {
+        pointer-events: none;
+    } */
     .game__item:hover {
         cursor: pointer;
     }
@@ -254,4 +262,29 @@
     .game__item:hover .game__item-sum {
         opacity: 1;
     }
+    ._diamondBlue{
+        pointer-events: none;
+    }
+    ._diamondBlue:hover .game__item-sum {
+        opacity: 0;
+    }
+    ._diamondGreen{
+        pointer-events: none;
+    }
+    ._diamondGreen:hover .game__item-sum {
+        opacity: 0;
+    }
+    ._bomb{
+        pointer-events: none;
+    }
+    ._bomb:hover .game__item-sum {
+        opacity: 0;
+    }
+.gameOver_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.tile-disabled{
+    pointer-events:none;
+}
 }
