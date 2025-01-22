@@ -24,11 +24,16 @@ const images: string[] = [
 
 const MainGame: React.FC = () => {
   const [isGameStarted, setIsGameStarted] = useState<boolean>(true);
-  const [clickedTiles, setClickedTiles] = useState<boolean[]>(Array(9).fill(false)); // Track clicked tiles
-  const [clickedIndex, setClickedIndex] = useState<number | null>(null); // To store which tile was clicked
+  const [clickedTiles, setClickedTiles] = useState<boolean[]>(() => {
+    const savedTiles = localStorage.getItem("clickedTiles");
+    return savedTiles ? JSON.parse(savedTiles) : Array(9).fill(false);
+  });
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const [isAnimationComplete, setIsAnimationComplete] = useState<boolean>(false);
-  const [isAllTilesDisabled, setIsAllTilesDisabled] = useState<boolean>(false); // To disable all tiles
+  const [isAllTilesDisabled, setIsAllTilesDisabled] = useState<boolean>(false);
+
+
 
   useEffect(() => {
     let interval: any;
@@ -50,7 +55,20 @@ const MainGame: React.FC = () => {
     };
   }, [clickedIndex]);
 
-  // Reset the game after 3 seconds when a bomb tile is clicked
+
+
+  const getTileClass = (index: number): string => {
+    if (clickedTiles[index]) {
+      if (index < 4) {
+        return "_diamondBlue";
+      } else if (index >= 4 && index < 7) {
+        return "_diamondGreen";
+      } else {
+        return "_bomb";
+      }
+    }
+    return "";
+  };
   const resetGame = () => {
     setTimeout(() => {
       setClickedTiles(Array(9).fill(false)); // Reset clicked tiles
@@ -59,76 +77,87 @@ const MainGame: React.FC = () => {
       setIsAnimationComplete(false); // Reset animation state
       setIsAllTilesDisabled(false); // Enable all tiles again
       setIsGameStarted(false); // Reset the game start state
-    },10000); // 3 seconds delay
-  };
   
-  const getTileClass = (index: number): string => {
-    if (clickedTiles[index]) {
-      if (index < 4) {
-        return "_diamondBlue";  // For tiles 1, 2, 3, 4
-      } else if (index >= 4 && index < 7) {
-        return "_diamondGreen";  // For tiles 5, 6, 7
-      } else {
-        return "_bomb";  // For tiles 8, 9
-      }
-    }
-    return "";
+      // Clear local storage during game reset
+      localStorage.clear();
+    }, 3000); // 3 seconds delay
   };
 
   const handleTileClick = (index: number): void => {
     if (clickedTiles[index] || isAllTilesDisabled) return; // Prevent clicking already clicked tiles or disabled tiles
-    
+  
     // Mark the clicked tile and start animation for the blast image
     setClickedIndex(index);
     setCurrentImageIndex(0);
     setIsAnimationComplete(false);
-    
+  
     setClickedTiles((prevTiles) => {
       const updatedTiles = [...prevTiles];
       updatedTiles[index] = true; // Mark this tile as clicked
+  
+      // Save the updated tiles to local storage
+      localStorage.setItem("clickedTiles", JSON.stringify(updatedTiles));
       return updatedTiles;
     });
-
-    // If bomb tile is clicked, disable all tiles and trigger reset
+  
+    // If bomb tile is clicked, clear local storage and disable all tiles
     if (index >= 7) {
-      setIsAllTilesDisabled(true); // Disable all tiles when bomb tile is clicked
-      resetGame(); // This will reset the game when the bomb tile is clicked
+      console.log("Bomb tile clicked, clearing clickedTiles from localStorage...");
+      localStorage.removeItem("clickedTiles"); // Remove clickedTiles
+      localStorage.setItem("bombClicked", "true"); // Set bomb clicked flag
+      setIsAllTilesDisabled(true); // Disable all tiles
+      resetGame(); // Reset the game
     }
+    
+    
   };
+
 
   const shouldShowBlastImage = (index: number): boolean => {
     return clickedTiles[index] && getTileClass(index) === "_bomb" && !isAnimationComplete;
   };
+  useEffect(() => {
+    const savedTiles = localStorage.getItem("clickedTiles");
+    if (savedTiles) {
+      setClickedTiles(JSON.parse(savedTiles));
+    }
+  }, []);
+  useEffect(() => {
+    const bombClicked = localStorage.getItem("bombClicked");
+    console.log("Checking bombClicked flag on page load:", bombClicked);
+    if (bombClicked === "true") {
+      console.log("Bomb was clicked before refresh. Resetting the game...");
+      resetGame();
+      console.log("Game reset complete. Clearing bombClicked flag...");
+      localStorage.removeItem("bombClicked");
+    }
+  }, []);
 
   return (
     <div className="template__game">
       <div className="game">
-        <div className={`game__grid _3x3 ${isGameStarted ? "" : "_disabled"}
-         `}>
-           {/* //  ${isAllTilesDisabled ? "gameOver_disabled" : ""} */}
+        <div className={`game__grid _3x3 ${isGameStarted ? "" : "_disabled"}`}>
           {[...Array(9)].map((_, index) => (
             <div
               key={index}
               className={`game__item ${getTileClass(index)} ${
                 isAllTilesDisabled && !clickedTiles[index] ? "gameOver_disabled" : ""
-              }`} 
+              }`}
               onClick={() => handleTileClick(index)}
             >
               <div className="game__item-layout1">
                 <div className="game__item-layout2">
-                  { 
-                    shouldShowBlastImage(index) ? (
-                      <div className="game__item-layout3">
-                        <img
-                          src={images[currentImageIndex]}
-                          alt={`Blast Image ${currentImageIndex + 1}`}
-                          className="animated__image"
-                        />
-                      </div>
-                    ) : (
-                      clickedIndex === index && <div className="game__item-layout3"></div>
-                    )
-                  }
+                  {shouldShowBlastImage(index) ? (
+                    <div className="game__item-layout3">
+                      <img
+                        src={images[currentImageIndex]}
+                        alt={`Blast Image ${currentImageIndex + 1}`}
+                        className="animated__image"
+                      />
+                    </div>
+                  ) : (
+                    clickedIndex === index && <div className="game__item-layout3"></div>
+                  )}
                   <div className="game__item-sum">$122</div>
                 </div>
               </div>

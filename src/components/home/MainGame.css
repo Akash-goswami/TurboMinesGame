@@ -47,15 +47,29 @@
 .game__grid._7x7 {
     --game-grid: 7;
 }
-.game__grid._5x5 .game__item {
-    padding: .1875rem;
-    width: 84%;
-    height: 84%;
+.game__grid._9x9 {
+    --game-grid: 9;
 }
-.game__grid._7x7 .game__item {
-    width: 90%;
-    height: 90%;
+.game__grid._3x3{
+    width: 99.5%;
+    height: 99.5%;
 }
+.game__grid._5x5{
+    width: 98.5%;
+    height: 98.5%;
+}
+.game__grid._7x7 {
+    width: 98%;
+    height: 98%;
+}
+.game__grid._9x9 {
+    width: 98%;
+    height: 98%;
+}
+/* .game__grid._9x9 .game__item {
+    width: 78%;
+    height: 78%;
+} */
 
 .game__item {
     padding: .125rem;
@@ -139,6 +153,9 @@
     bottom: 0;
     right: 0;
     overflow: hidden;
+}
+._5x5 .game__item-layout3 img{
+    margin-left:100px;
 }
  .game__item-layout3:after {
     content: "";
