@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./MainGame.css";
+import { tileClickSound ,blueDimondSound } from "../../utils/gameSettings";
 import { BlastImg01, BlastImg02, BlastImg03,BlastImg04, BlastImg05,
   BlastImg06, BlastImg07, BlastImg08, BlastImg09, BlastImg10,
   BlastImg11, BlastImg12, BlastImg13, BlastImg14, BlastImg15, } from "../../Index";
 import { useMainGameContext } from "../../context/MainGameContext";
+import { useSound } from "../../context/soundContext";
 
 const images: string[] = [
   BlastImg01, BlastImg02, BlastImg03, BlastImg04, BlastImg05,
@@ -26,6 +28,7 @@ const MainGame: React.FC = () => {
     isAllTilesDisabled, setIsAllTilesDisabled,
     loadingTileIndex, setLoadingTileIndex,
   } = useMainGameContext();
+  const { sound } = useSound();
 
   useEffect(() => {
     let interval: any;
@@ -81,6 +84,12 @@ const MainGame: React.FC = () => {
   };
 
   const handleTileClick = (index: number): void => {
+    if (sound) {
+      tileClickSound();
+      setTimeout(() => {
+        blueDimondSound()
+      }, 200);
+    }
     if (clickedTiles[index] || isAllTilesDisabled) return; // Prevent clicking already clicked tiles or disabled tiles
   
     setLoadingTileIndex(index); // Set the clicked tile index to show the loading state

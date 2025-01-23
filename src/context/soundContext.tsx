@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { pauseSound, playSound, setVolume } from "../utils/gameSettings";
+import { setVolume } from "../utils/gameSettings";
 
 interface SoundProviderProps {
   children: React.ReactNode;
@@ -28,13 +28,13 @@ export const SoundProvider = ({ children }: SoundProviderProps) => {
 
   const [previousVolume, setPreviousVolume] = useState<number>(volume);
 
-  useEffect(() => {
-    if (sound) {
-      playSound();
-    } else {
-      pauseSound();
-    }
-  }, [sound]);
+  // useEffect(() => {
+  //   if (sound) {
+  //     playSound();
+  //   } else {
+  //     pauseSound();
+  //   }
+  // }, [sound]);
 
   useEffect(() => {
     localStorage.setItem("sound", JSON.stringify(sound));
