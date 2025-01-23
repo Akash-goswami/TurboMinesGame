@@ -1,20 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./MainGame.css";
-import BlastImg01 from "/public/FIRE/1.png";
-import BlastImg02 from "/public/FIRE/2.png";
-import BlastImg03 from "/public/FIRE/3.png";
-import BlastImg04 from "/public/FIRE/4.png";
-import BlastImg05 from "/public/FIRE/5.png";
-import BlastImg06 from "/public/FIRE/6.png";
-import BlastImg07 from "/public/FIRE/7.png";
-import BlastImg08 from "/public/FIRE/8.png";
-import BlastImg09 from "/public/FIRE/9.png";
-import BlastImg10 from "/public/FIRE/10.png";
-import BlastImg11 from "/public/FIRE/11.png";
-import BlastImg12 from "/public/FIRE/12.png";
-import BlastImg13 from "/public/FIRE/13.png";
-import BlastImg14 from "/public/FIRE/14.png";
-import BlastImg15 from "/public/FIRE/15.png";
+import { BlastImg01, BlastImg02, BlastImg03,BlastImg04, BlastImg05,
+  BlastImg06, BlastImg07, BlastImg08, BlastImg09, BlastImg10,
+  BlastImg11, BlastImg12, BlastImg13, BlastImg14, BlastImg15, } from "../../Index";
+import { useMainGameContext } from "../../context/MainGameContext";
 
 const images: string[] = [
   BlastImg01, BlastImg02, BlastImg03, BlastImg04, BlastImg05,
@@ -23,17 +12,20 @@ const images: string[] = [
 ];
 
 const MainGame: React.FC = () => {
-  const [isGameStarted, setIsGameStarted] = useState<boolean>(true);
-  const [clickedTiles, setClickedTiles] = useState<boolean[]>(() => {
-    const savedTiles = localStorage.getItem("clickedTiles");
-    return savedTiles ? JSON.parse(savedTiles) : Array(9).fill(false);
-  });
-  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [isAnimationComplete, setIsAnimationComplete] = useState<boolean>(false);
-  const [isAllTilesDisabled, setIsAllTilesDisabled] = useState<boolean>(false);
-
-
+  const {
+    isGameStarted,
+    tileValue,
+    clickedTiles,
+    setClickedTiles,
+    isLoading,
+    setIsLoading,
+    setIsGameStarted,
+    clickedIndex, setClickedIndex,
+    currentImageIndex, setCurrentImageIndex,
+    isAnimationComplete, setIsAnimationComplete,
+    isAllTilesDisabled, setIsAllTilesDisabled,
+    loadingTileIndex, setLoadingTileIndex,
+  } = useMainGameContext();
 
   useEffect(() => {
     let interval: any;
@@ -48,7 +40,7 @@ const MainGame: React.FC = () => {
             return prevIndex;
           }
         });
-      }, 35);
+      }, 40);
     }
     return () => {
       if (interval) clearInterval(interval);
@@ -58,6 +50,11 @@ const MainGame: React.FC = () => {
 
 
   const getTileClass = (index: number): string => {
+
+    if (loadingTileIndex === index) {
+      return "_loading"; // Apply loading class to the clicked tile only
+    }
+
     if (clickedTiles[index]) {
       if (index < 4) {
         return "_diamondBlue";
@@ -71,7 +68,7 @@ const MainGame: React.FC = () => {
   };
   const resetGame = () => {
     setTimeout(() => {
-      setClickedTiles(Array(9).fill(false)); // Reset clicked tiles
+      setClickedTiles(Array(tileValue).fill(false)); // Reset clicked tiles
       setClickedIndex(null); // Reset clicked index
       setCurrentImageIndex(0); // Reset animation index
       setIsAnimationComplete(false); // Reset animation state
@@ -86,6 +83,14 @@ const MainGame: React.FC = () => {
   const handleTileClick = (index: number): void => {
     if (clickedTiles[index] || isAllTilesDisabled) return; // Prevent clicking already clicked tiles or disabled tiles
   
+    setLoadingTileIndex(index); // Set the clicked tile index to show the loading state
+    setIsLoading(true)
+  
+  // After a short delay, reset loading state
+  setTimeout(() => {
+    setLoadingTileIndex(null); // Reset the loading state after the delay
+    setIsLoading(false)
+  },100); // Adjust the delay as needed (e.g., 1000ms = 1 second)
     // Mark the clicked tile and start animation for the blast image
     setClickedIndex(index);
     setCurrentImageIndex(0);
@@ -103,12 +108,10 @@ const MainGame: React.FC = () => {
     // If bomb tile is clicked, clear local storage and disable all tiles
     if (index >= 7) {
       console.log("Bomb tile clicked, clearing clickedTiles from localStorage...");
-      localStorage.setItem("bombClicked", "true"); // Set bomb clicked flag
-      setIsAllTilesDisabled(true); // Disable all tiles
-       // Reveal all bomb tiles
+      localStorage.setItem("bombClicked", "true"); 
+      setIsAllTilesDisabled(true); 
        setClickedTiles((prevTiles) => {
         const updatedTiles = [...prevTiles];
-        // Only mark bomb tiles (index >= 7) as true, do not override the already clicked tiles
         for (let i = 7; i < updatedTiles.length; i++) {
           updatedTiles[i] = true;
         }
@@ -128,12 +131,15 @@ const MainGame: React.FC = () => {
     const bombClicked = localStorage.getItem("bombClicked");
   
     if (bombClicked) {
-      localStorage.removeItem("clickedTiles"); // Clear clickedTiles
-      localStorage.removeItem("bombClicked"); // Remove bombClicked flag
-      setIsAllTilesDisabled(true); // Disable all tiles
-      resetGame(); // Reset the game state
+      setTimeout(() => {
+        localStorage.removeItem("clickedTiles");
+        localStorage.removeItem("bombClicked"); 
+        setIsAllTilesDisabled(true); 
+        resetGame();
+      }, 100); // Delay for 100ms
     }
   }, []);
+  
 
 
 
@@ -165,8 +171,13 @@ const MainGame: React.FC = () => {
   return (
     <div className="template__game">
       <div className="game">
-        <div className={`game__grid _7x7 ${isGameStarted ? "" : "_disabled"}`}>
-          {[...Array(49)].map((_, index) => (
+        <div className={`game__grid
+          ${tileValue === 9 && "_3x3"}
+          ${tileValue === 25 && "_5x5"}
+          ${tileValue === 49 && "_7x7"}
+          ${tileValue === 81 && "_9x9"}
+          ${isGameStarted ? "" : "_disabled"}`}>
+          {[...Array(tileValue)].map((_, index) => (
             <div
               key={index}
               className={`game__item ${getTileClass(index)} ${
@@ -176,7 +187,10 @@ const MainGame: React.FC = () => {
             >
               <div className="game__item-layout1">
                 <div className="game__item-layout2">
-                  {shouldShowBlastImage(index) ? (
+                  {
+                    !isLoading && 
+                    <>
+                    {shouldShowBlastImage(index) ? (
                     <div className="game__item-layout3">
                       <img
                         src={images[currentImageIndex]}
@@ -187,6 +201,8 @@ const MainGame: React.FC = () => {
                   ) : (
                     clickedIndex === index && <div className="game__item-layout3"></div>
                   )}
+                    </>
+                  }
                   <div className="game__item-sum">$122</div>
                 </div>
               </div>
