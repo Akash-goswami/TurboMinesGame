@@ -1,4 +1,3 @@
-import React from 'react'
 import "./WiningPop.css"
 
 function WiningPop() {

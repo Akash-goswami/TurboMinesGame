@@ -108,9 +108,20 @@ const MainGame: React.FC = () => {
       setIsAllTilesDisabled(true); // Disable all tiles
       resetGame(); // Reset the game
     }
-    
-    
   };
+  
+  // Clear bombClicked and reset the game if the user refreshes
+  useEffect(() => {
+    const bombClicked = localStorage.getItem("bombClicked");
+  
+    if (bombClicked) {
+      localStorage.removeItem("clickedTiles"); // Clear clickedTiles
+      localStorage.removeItem("bombClicked"); // Remove bombClicked flag
+      setIsAllTilesDisabled(true); // Disable all tiles
+      resetGame(); // Reset the game state
+    }
+  }, []);
+
 
 
   const shouldShowBlastImage = (index: number): boolean => {
