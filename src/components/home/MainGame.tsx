@@ -64,7 +64,7 @@ const MainGame: React.FC = () => {
       } else if (index >= 4 && index < 7) {
         return "_diamondGreen";
       } else {
-        return "_bomb";
+        return "_bomb"; // Bomb class for all bomb tiles
       }
     }
     return "";
@@ -103,12 +103,25 @@ const MainGame: React.FC = () => {
     // If bomb tile is clicked, clear local storage and disable all tiles
     if (index >= 7) {
       console.log("Bomb tile clicked, clearing clickedTiles from localStorage...");
-      localStorage.removeItem("clickedTiles"); // Remove clickedTiles
       localStorage.setItem("bombClicked", "true"); // Set bomb clicked flag
       setIsAllTilesDisabled(true); // Disable all tiles
-      resetGame(); // Reset the game
+       // Reveal all bomb tiles
+       setClickedTiles((prevTiles) => {
+        const updatedTiles = [...prevTiles];
+        // Only mark bomb tiles (index >= 7) as true, do not override the already clicked tiles
+        for (let i = 7; i < updatedTiles.length; i++) {
+          updatedTiles[i] = true;
+        }
+        return updatedTiles;
+      });
+      // Keep tiles visible for 3 seconds, then reset the game
+      setTimeout(() => {
+        resetGame(); // Reset the game state after 3 seconds
+      }, 3000); // 3-second delay before resetting
     }
   };
+  
+  
   
   // Clear bombClicked and reset the game if the user refreshes
   useEffect(() => {
@@ -125,7 +138,12 @@ const MainGame: React.FC = () => {
 
 
   const shouldShowBlastImage = (index: number): boolean => {
-    return clickedTiles[index] && getTileClass(index) === "_bomb" && !isAnimationComplete;
+    return (
+      clickedTiles[index] &&
+      getTileClass(index) === "_bomb" &&
+      index === clickedIndex && // Only animate the clicked bomb
+      !isAnimationComplete
+    );
   };
   useEffect(() => {
     const savedTiles = localStorage.getItem("clickedTiles");
@@ -147,8 +165,8 @@ const MainGame: React.FC = () => {
   return (
     <div className="template__game">
       <div className="game">
-        <div className={`game__grid _3x3 ${isGameStarted ? "" : "_disabled"}`}>
-          {[...Array(9)].map((_, index) => (
+        <div className={`game__grid _7x7 ${isGameStarted ? "" : "_disabled"}`}>
+          {[...Array(49)].map((_, index) => (
             <div
               key={index}
               className={`game__item ${getTileClass(index)} ${
