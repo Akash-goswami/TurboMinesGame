@@ -20,6 +20,7 @@ import wishListIconColor from "/MenuImages/wishListIconColor.png";
 import "./Manu.css";
 import { useSocket } from "../../context/socket/socketProvider";
 import ExitPopModel from "./ExitPopModel";
+import Footer from "../home/Footer";
 
 const Manu: React.FC = () => {
   const [currentDateTime, setCurrentDateTime] = useState<string>("");
@@ -167,7 +168,8 @@ const Manu: React.FC = () => {
         <div className="nickname-container">
           <div className="nickname-title">
             <span>Username</span>
-            <h1>{userInfo?.urNm}</h1>{" "}
+            {/* <h1>{userInfo?.urNm}</h1>{" "} */}
+            <h1>Demo01</h1>{" "}
           </div>
           <div className="Sound-container">
             <span>Sound</span>
@@ -277,8 +279,13 @@ const Manu: React.FC = () => {
           </ul>
         </div>
       </div>
-      <div className="footer-container">
-        <div>PumpedX | Version: "1.0.0"</div>
+      <div
+        className="menu-footer-container"
+        style={{
+          fontSize: "10px",
+        }}
+      >
+        <div>PumpedX | Version: "1.0.3"</div>
         <div>
           {`${new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",

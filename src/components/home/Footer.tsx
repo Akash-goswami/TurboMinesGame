@@ -33,7 +33,7 @@ function Footer() {
   return (
     <div className="footer-container">
       <div className="ContaintFooter">
-        <div>PumpedX | Version: "1.0.0"</div>
+        <div>PumpedX | Version: "1.0.3"</div>
         <div>
           {`${new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",

@@ -154,86 +154,86 @@ const Rules: React.FC = () => {
           <div className="how-to-Play" id="rule0">
             <h2>How to Play?</h2>
             <ul>
-              <li>Select a character</li>
-              <li>Place your bet</li>
-              <li>
+              <li>Choose your grid: 3x3, 5x5, 7x7, or 9x9.</li>
+              <li>Set your bet.</li>
+              <li>Start the game: Click "Start Game".</li>
+              {/* <li>
                 Hold down the "PUMP" button and pump the muscles until the
                 coefficient reaches your desired target
               </li>
               <li>
                 Claim your winnings by releasing the button before the character
                 gets tired
-              </li>
+              </li> */}
             </ul>
-            <p>
+            {/* <p>
               The longer you pump the muscles, the bigger your winnings will be.
               Keep in mind that the character can get tired at any moment. If
               you don’t claim your winnings before the character gets tired, you
               will lose your bet.
-            </p>
+            </p> */}
           </div>
           <div className="Game_Details" id="rule1">
             <h2>Game Details</h2>
             <h6>Place Bet</h6>
-            <p>
+            {/* <p>
               Select the bet amount under the "PUMP" button and hold down the
               "PUMP" button to start your athletic earnings!
+            </p> */}
+            <h6>1. Choose your grid:</h6>
+            <p>
+            Select from four grid sizes: 3x3, 5x5, 7x7, or 9x9. Each grid has a default number of mines and gems, but you can customize the number of mines to your liking. The more mines are on the playing field, the higher the winning multiplier will be, as well as risk of striking one, so choose wisely!
             </p>
+            <h6>2. Set your bet:</h6>
+            <p>
+            Enter the amount you want to wager in the "Bet Amount" field. Your bet will determine the potential payout if you successfully uncover all the gems without hitting a mine.
+            </p>
+            <h6>3. Start the game:</h6>
+            <p>
+            Click the "Start Game" button to begin your treasure hunt. Once the game starts, you'll see a grid of tiles concealing both gems and mines.
+            </p>
+            <h6>4. Gems and Multipliers:</h6>
+            <p>
+            Turbo Mines features three types of gems with varying multipliers:
+            </p>
+            <ul>
+              <li><span>Blue gems:</span> Multipliers start at 1.0 and increase with each gem, ranging from 0 to 3.5.</li>
+              <li><span>Green gems:</span> Offer significantly higher multipliers than blue gems, ranging from 3.5 to 30.</li>
+              <li><span> Golden gems:</span>The most valuable gems, providing the highest multipliers, starting from 30 and above.</li>
+            </ul>
             <h6>Cash Out</h6>
-            <p>
-              Release the "PUMP" button at any moment during the exercise before
-              the character gets tired. The bet amount will be multiplied by the
-              coefficient at the time of the stop, and this athletic approach
-              will be completed.
-              <br />
-              The winning amount is rounded to two decimal places.
-            </p>
-            <h6>Min & Max Multiplier</h6>
-            <p>
-              The minimum winning coefficient is x1.01.
-              <br />
-              The maximum winning coefficient is x100.00. However, the maximum
-              winnings are limited by the operator. You can review it in the
-              "Limits" section in the settings menu.
-            </p>
-            <h6>Ping</h6>
-            <p>
-              Ping is the delay between your device and the game servers.
-              <br />
-              <br />
-              If the ping exceeds 5000 ms, playing is not recommended as the
-              displayed game situation will lag 5 seconds behind the actual
-              situation.
-            </p>
+            <p>You can cancel the bet only if you haven't opened any tiles yet. This allows you to reconsider your strategy or adjust your bet amount before committing to a round.</p>
             <h6>RTP</h6>
             <p>
-              The game is based on a coefficient called "RTP" (Return to
-              Player), which is a statistical <br /> average of payouts over
-              billions of rounds. <br />
-              In PumpedX, the RTP is 96.0%
+            Game relies on a coefficient called "RTP" (Return to Player) which is the statistical average of payouts over billions of rounds. <br />
+            Turbo Mines offers four different game fields with the following minimum RTPs: <br />
             </p>
+            <ul>
+              <li>3x3 (94.89%);</li>
+              <li>5x5 (94.40%);</li>
+              <li>7x7 (94.25%);</li>
+              <li>9x9 (94.54%).</li>
+            </ul>
           </div>
           <div className="Settings" id="rule2">
             <h2>Settings</h2>
             <p>
-              Click on the icon with three sliders in the upper right corner of
-              the screen to open the settings menu. In the settings, you can:
+            Click on the icon with three sliders in the upper right corner of the screen to open the settings menu. In the settings, you can:
             </p>
             <ul>
               <li>view your username</li>
               <li>
-                view betting limits: minimum bet, maximum bet, and maximum
-                profit
+              view the minimum bet, maximum bet, and maximum profit limits
               </li>
-              <li>enable/disable sounds</li>
-              <li>view your betting history</li>
+              <li>turn on/off sounds</li>
+              <li>view a list of your recent bets </li>
             </ul>
-            <p>
+            {/* <p>
               You can also change your character on the main game screen using
               the slider located on the right. <br />
               Similarly, the mute button is located on the main screen to the
               left of the settings button.
-            </p>
+            </p> */}
           </div>
           <div className="Disconnection_Policy" id="rule3">
             <h2>Disconnection Policy</h2>
@@ -244,33 +244,32 @@ const Rules: React.FC = () => {
             </p>
             <ul>
               <li>
-                If a player's internet connection is lost during active
-                gameplay, the placed bets will remain active.
+              If a bet is placed after a disconnection, it will not be sent to the server, no funds will be deducted, and the game will not proceed.
               </li>
               <li>
-                In the rare event that our server experiences issues, we have a
-                policy to refund all bets placed during the affected game
-                rounds. The full bet amount will be returned to the player's
-                balance.
+              If a disconnection occurs during an active game, the game state on the server will remain unchanged. Players will be able to resume the game once the connection is restored.
               </li>
             </ul>
           </div>
           <div className="Version" id="rule4">
             <h2>Version</h2>
             <p>
-              Game Version: "1.0.0" <br />
+              Game Version: "1.0.3" <br />
               {/* RNG version: "2.0.0" */}
             </p>
           </div>
         </div>
       </div>
       <div
-        className="footer-container"
+        className="menu-footer-container"
         style={{
           fontSize: "10px",
+          position: "absolute",
+          bottom: "3px"
+      
         }}
       >
-        <div>PumpedX | Version: "1.0.0"</div>
+        <div>PumpedX | Version: "1.0.3"</div>
         <div>
           {`${new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",

@@ -12,7 +12,7 @@
   background-repeat: repeat-y, repeat-y;
   background-position: left top, right top;
   width: 100%;
-  height: 100%;
+  height: 98%;
   overflow: hidden;
   /* width: 960px; */
 }
@@ -51,7 +51,7 @@
 }
 .Rules-container-body-box01 {
   width: 15%;
-  margin-top: -33px;
+  margin-top: -46px;
   /* width: 300px; */
   font-size: 16px;
   z-index: 1;
@@ -86,6 +86,7 @@
   max-height: 640px;
   scroll-behavior: smooth;
   margin-top: 29px;
+  margin-left: 65px;
   font-size: 1rem;
   overflow-y: scroll;
   scrollbar-width: 10px;
@@ -116,6 +117,9 @@
 }
 .how-to-Play {
   padding: 0px 10px 10px 10px;
+}
+.how-to-Play h2{
+  margin-top:0px;
 }
 .how-to-Play h2,
 .Game_Details h2,

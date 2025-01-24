@@ -11,6 +11,7 @@ import redcolorMoney from "/MenuImages/redcolorMoney.png";
 import "./Limit.css";
 import "./Manu.css";
 import "./Loding.css";
+import Footer from "../home/Footer";
 
 const LimitMain: React.FC = () => {
   const [currentDateTime, setCurrentDateTime] = useState<string>("");
@@ -102,26 +103,29 @@ const LimitMain: React.FC = () => {
           <span className="limit-amount">2,50,000</span>
         </div>
       </div>
-      <div>
-        <div className="footer-container">
-          <div>PumpedX | Version: "1.0.0"</div>
-          <div>
-            {`${new Intl.DateTimeFormat("en-GB", {
-              day: "2-digit",
-              month: "short",
-              year: "numeric",
-            })
-              .format(new Date())
-              .replace(
-                /(\d{2}) (\w{3}) (\d{4})/,
-                "$1 $2, $3"
-              )} | ${new Date().toLocaleTimeString("en-US", {
-              hour12: false,
-              hour: "2-digit",
-              minute: "2-digit",
-              second: "2-digit",
-            })}`}
-          </div>
+      <div
+        className="menu-footer-container"
+        style={{
+          fontSize: "10px",
+        }}
+      >
+        <div>PumpedX | Version: "1.0.3"</div>
+        <div>
+          {`${new Intl.DateTimeFormat("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+          })
+            .format(new Date())
+            .replace(
+              /(\d{2}) (\w{3}) (\d{4})/,
+              "$1 $2, $3"
+            )} | ${new Date().toLocaleTimeString("en-US", {
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}`}
         </div>
       </div>
     </div>

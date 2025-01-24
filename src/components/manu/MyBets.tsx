@@ -158,13 +158,14 @@ const MyBets: React.FC = () => {
         </div>
       </div>
       <div
-        className="myBets-footer"
+        className="menu-footer-container"
         style={{
           fontSize: "10px",
-          padding: "0px 10px",
+          width:"97.5% !important",
+          marginBottom: "3px"
         }}
       >
-        <div>PumpedX | Version: "1.0.0"</div>
+        <div>PumpedX | Version: "1.0.3"</div>
         <div>
           {`${new Intl.DateTimeFormat("en-GB", {
             day: "2-digit",
