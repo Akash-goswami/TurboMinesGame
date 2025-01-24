@@ -212,6 +212,24 @@ animation: game-item-open .25s linear forwards;
     background-position: center;
     animation: diamond-open .2s linear forwards;
 }
+//gold css
+.game__item._diamondGold {
+    pointer-events: none;
+    animation: game-item-open .25s linear forwards;
+}
+.game__item._diamondGold .game__item-layout1 {
+    background-image: linear-gradient(137deg, #faca9d -17.13%, #fa710f 118.51%);
+    box-shadow: .1875rem .1875rem .25rem 0px rgba(10, 9, 9, .4), 0px 0px .625rem 0px rgba(250, 202, 157, .5);
+}
+
+.game__item._diamondGold .game__item-layout2 {
+    background-image: url(/public/GameImages/goldbg.svg), url(/public/GameImages/goldImg.webp), linear-gradient(359deg, #0b5037 -10.34%, #401e0b -10.33%, #1d0c03 46.92%, #49290c 108.68%);
+    background-size: contain, 50%, contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: diamond-open .2s linear forwards;
+}
+
 //bomb css
 
 .game__item._bomb {
@@ -290,6 +308,12 @@ animation: game-item-open .25s linear forwards;
     }
     ._diamondGreen:hover .game__item-sum {
         opacity: 0;
+    }
+    ._diamondGold:hover .game__item-sum {
+        opacity: 0;
+    }
+    ._diamondGold{
+        pointer-events:none;
     }
     ._bomb{
         pointer-events: none;

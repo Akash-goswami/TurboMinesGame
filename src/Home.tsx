@@ -23,7 +23,6 @@ export default function Home({ shouldShowRotateImage }: HomeProps) {
           <Navbar />
           <div className="mainGameContainer">
             <div className="betContainer">
-              
             </div>
           <MainGame/>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./MainGame.css";
-import { tileClickSound ,blueDimondSound ,GreenDimondSound, BombBlastSound } from "../../utils/gameSettings";
+import { tileClickSound ,blueDimondSound ,GreenDimondSound, BombBlastSound, GoldDimondSound } from "../../utils/gameSettings";
 import { BlastImg01, BlastImg02, BlastImg03,BlastImg04, BlastImg05,
   BlastImg06, BlastImg07, BlastImg08, BlastImg09, BlastImg10,
   BlastImg11, BlastImg12, BlastImg13, BlastImg14, BlastImg15, } from "../../Index";
@@ -63,7 +63,11 @@ const MainGame: React.FC = () => {
         return "_diamondBlue";
       } else if (index >= 4 && index < 7) {
         return "_diamondGreen";
-      } else {
+      } 
+      // else if (index >= 7 && index < 20) {
+      //   return "_diamondGold";
+      // }
+       else {
         return "_bomb"; // Bomb class for all bomb tiles
       }
     }
@@ -91,7 +95,11 @@ const MainGame: React.FC = () => {
         blueDimondSound()
       }else if(index >= 4 && index < 7){
         GreenDimondSound()
-      }else{
+      }
+      // else if(index >= 7 && index < 20){
+      //   GoldDimondSound()
+      // }
+      else{
         BombBlastSound()
       }
       }, 200);

@@ -112,7 +112,8 @@
 }
 @media screen and (max-width: 430px) {
   .Limit-container-body-box01 {
-    width: 100%;
+    width: 80%;
     padding: 10px;
+    font-size:12px;
   }
 }
