@@ -1,0 +1,43 @@
+.winingPop_Container {
+    width: 200px;
+    height: 200px;
+    position: absolute; /* Use absolute positioning */
+    top: 50%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%); 
+}
+
+.winPop_grid{
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.game__item._diamondBlue {
+    pointer-events: none;
+    animation: game-item-open .25s linear forwards;
+    }
+.game__item._diamondBlue .game__item-layout1 {
+        background-image: linear-gradient(137deg, #9de9fa -17.13%, #1350ac 118.51%);
+        box-shadow: .1875rem .1875rem .25rem 0px rgba(10, 9, 9, .4), 0px 0px 2.25rem 0px rgba(157, 233, 250, .5);
+    }
+.game__item._diamondBlue .game__item-layout2 {
+        background-image: url(/public/GameImages/Blueimg.svg), url(/public/GameImages/BluerDimondImg.webp), linear-gradient(359deg, #0b1e50 -10.34%, #03091d 46.92%, #0f1b59 108.68%);
+        background-size: contain,92%, contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        animation: diamond-open .2s linear forwards;
+}
+.border_Multiplyer{
+    width:80%;
+    display:flex;
+    align-item:center;
+    justify-content:space-between;
+    padding:10px;
+    border:1px solid gray;
+    background:#9de9fa;
+    color:black;
+    font-weight:400;
+    border-radius:30px;
+    margin-bottom:10px;
+}

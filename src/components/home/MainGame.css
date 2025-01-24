@@ -47,21 +47,35 @@
 .game__grid._7x7 {
     --game-grid: 7;
 }
-.game__grid._5x5 .game__item {
-    padding: .1875rem;
-    width: 84%;
-    height: 84%;
+.game__grid._9x9 {
+    --game-grid: 9;
 }
-.game__grid._7x7 .game__item {
-    width: 90%;
-    height: 90%;
+.game__grid._3x3{
+    width: 99.5%;
+    height: 99.5%;
 }
+.game__grid._5x5{
+    width: 98.5%;
+    height: 98.5%;
+}
+.game__grid._7x7 {
+    width: 98%;
+    height: 98%;
+}
+.game__grid._9x9 {
+    width: 98%;
+    height: 98%;
+}
+/* .game__grid._9x9 .game__item {
+    width: 78%;
+    height: 78%;
+} */
 
 .game__item {
     padding: .125rem;
     position: relative;
-    width: 90%;
-    height: 90%;
+    width: 92%;
+    height: 92%;
 }
 
 .game__item-layout1 {
@@ -108,8 +122,12 @@
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease-in-out;
+    opacity:0;
   }
   
+  .start-alert .offGame_Alert{
+    opacity:1;
+  }
   .start-alert__alert {
     position: absolute;
     left: 50%;
@@ -136,6 +154,9 @@
     right: 0;
     overflow: hidden;
 }
+._5x5 .game__item-layout3 img{
+    margin-left:100px;
+}
  .game__item-layout3:after {
     content: "";
     width: 100%;
@@ -160,9 +181,9 @@
 }
 
   //Blue diamond css
-  .game__item._diamondBlue {
-    pointer-events: none;
-    animation: game-item-open .25s linear forwards;
+.game__item._diamondBlue {
+pointer-events: none;
+animation: game-item-open .25s linear forwards;
 }
 .game__item._diamondBlue .game__item-layout1 {
     background-image: linear-gradient(137deg, #9de9fa -17.13%, #1350ac 118.51%);
@@ -186,7 +207,7 @@
 }
 .game__item._diamondGreen .game__item-layout2 {
     background-image: url(/public/GameImages/GreenImg01.svg), url(/public/GameImages/GreenImg02.webp), linear-gradient(359deg, #0b5037 -10.34%, #0b402d -10.33%, #031d0f 46.92%, #0c490e 108.68%);
-    background-size: contain, 50%, contain;
+    background-size: contain, 92%, contain;
     background-repeat: no-repeat;
     background-position: center;
     animation: diamond-open .2s linear forwards;
@@ -203,7 +224,7 @@
 }
 .game__item._bomb .game__item-layout2 {
     background-image: url(/public/GameImages/bombImg01.svg), url(/public/GameImages/bombImg02.webp), linear-gradient(15deg, #3a0505 4.12%, #150202 48.84%, #331005 96.65%);
-    background-size: contain, 50%, contain;
+    background-size: contain, 92%, contain;
     background-repeat: no-repeat;
     background-position: center;
     animation: diamond-open .2s linear forwards;
@@ -212,6 +233,7 @@
     pointer-events: none;
     opacity: .3;
 }
+
 
 @keyframes diamond-open {
     0% {
@@ -244,6 +266,9 @@
     .game {
         max-width: 27.75rem;
     }
+    /* .game__grid._disabled {
+        pointer-events: none;
+    } */
     .game__item:hover {
         cursor: pointer;
     }
@@ -254,4 +279,29 @@
     .game__item:hover .game__item-sum {
         opacity: 1;
     }
+    ._diamondBlue{
+        pointer-events: none;
+    }
+    ._diamondBlue:hover .game__item-sum {
+        opacity: 0;
+    }
+    ._diamondGreen{
+        pointer-events: none;
+    }
+    ._diamondGreen:hover .game__item-sum {
+        opacity: 0;
+    }
+    ._bomb{
+        pointer-events: none;
+    }
+    ._bomb:hover .game__item-sum {
+        opacity: 0;
+    }
+.gameOver_disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+.tile-disabled{
+    pointer-events:none;
+}
 }

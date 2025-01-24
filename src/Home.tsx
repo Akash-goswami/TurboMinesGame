@@ -6,6 +6,7 @@ import Footer from "./components/home/Footer";
 import { useBackground } from "./context/backgroundClassProvider";
 import ParentComponent from "./components/manu/ParentComponent";
 import MainGame from "./components/home/MainGame";
+import WiningPop from "./components/home/WiningPop";
 
 interface HomeProps {
   shouldShowRotateImage: boolean;
@@ -18,9 +19,22 @@ export default function Home({ shouldShowRotateImage }: HomeProps) {
       {shouldShowRotateImage ? (
         <img src={Rotate} alt="rotate" width="100%" height="100%" />
       ) : (
-        <div>
+        <div className="gameContainer">
           <Navbar />
+          <div className="mainGameContainer">
+            <div className="betContainer">
+              
+            </div>
           <MainGame/>
+          </div>
+          {/* this is wining pop show after cashout  */}
+          {/* <div style={
+            {
+              display:'flex'
+            }
+          }>
+          <WiningPop/>
+          </div> */}
           <Footer/>
           <div
                 className={`animation--Pf2PO animationOpen--lhuEa ${

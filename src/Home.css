@@ -452,3 +452,25 @@ nav .header {
     flex-direction: column;
     background-image: url("../MenuImages/Dots.svg");
   }
+  .gameContainer{
+    width:100vw;
+    height:100vh;
+    position:relative;
+  }
+  .mainGameContainer {
+    width: 100vw;
+    height: 100vh;
+    /* background: red; */
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    /* gap: 20px; */
+}
+.betContainer{
+  width:327px;
+  height:450px;
+  /* background:red; */
+  border:1px solid gray;
+  border-radius:20px;
+  margin-left: 10px;
+}
