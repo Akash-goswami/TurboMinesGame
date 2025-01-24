@@ -5,24 +5,24 @@ import GreenDimond from "../sound/green_dimond.mp3"
 import GoldDimond from "../sound/gold_dimond.mp3"
 import BombBlast from "../sound/bomb_open.mp3"
 
-let toggleSound: Howl | null;
-let girlLetsGo: Howl | null;
-let boyLetsGo: Howl | null;
-let girlPumpIt: Howl | null;
-let boyPumpIt: Howl | null;
-let tryAgain: Howl | null;
-let blueWin: Howl | null;
+// let toggleSound: Howl | null;
+// let girlLetsGo: Howl | null;
+// let boyLetsGo: Howl | null;
+// let girlPumpIt: Howl | null;
+// let boyPumpIt: Howl | null;
+// let tryAgain: Howl | null;
+// let blueWin: Howl | null;
 let tileClick: Howl | null;
 let blueDimond: Howl | null;
 let greenDimond: Howl | null;
 let goldDimond: Howl | null;
 let bombBlast: Howl | null;
-let greenWin: Howl | null;
-let yellowWin: Howl | null;
-let firstPull: Howl | null;
-let secoundPull: Howl | null;
-let thirdPull: Howl | null;
-let sound: boolean = true;
+// let greenWin: Howl | null;
+// let yellowWin: Howl | null;
+// let firstPull: Howl | null;
+// let secoundPull: Howl | null;
+// let thirdPull: Howl | null;
+// let sound: boolean = true;
 let gameVolume: number = 1;
 
 export function loadSounds(): void {

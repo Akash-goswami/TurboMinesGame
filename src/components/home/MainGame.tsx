@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./MainGame.css";
-import { tileClickSound ,blueDimondSound } from "../../utils/gameSettings";
+import { tileClickSound ,blueDimondSound ,GreenDimondSound, BombBlastSound } from "../../utils/gameSettings";
 import { BlastImg01, BlastImg02, BlastImg03,BlastImg04, BlastImg05,
   BlastImg06, BlastImg07, BlastImg08, BlastImg09, BlastImg10,
   BlastImg11, BlastImg12, BlastImg13, BlastImg14, BlastImg15, } from "../../Index";
@@ -87,7 +87,13 @@ const MainGame: React.FC = () => {
     if (sound) {
       tileClickSound();
       setTimeout(() => {
+      if(index < 4) {
         blueDimondSound()
+      }else if(index >= 4 && index < 7){
+        GreenDimondSound()
+      }else{
+        BombBlastSound()
+      }
       }, 200);
     }
     if (clickedTiles[index] || isAllTilesDisabled) return; // Prevent clicking already clicked tiles or disabled tiles
@@ -99,7 +105,7 @@ const MainGame: React.FC = () => {
   setTimeout(() => {
     setLoadingTileIndex(null); // Reset the loading state after the delay
     setIsLoading(false)
-  },100); // Adjust the delay as needed (e.g., 1000ms = 1 second)
+  },100);
     // Mark the clicked tile and start animation for the blast image
     setClickedIndex(index);
     setCurrentImageIndex(0);
